@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
-#include <windows.h>
 
 using namespace std;
 
