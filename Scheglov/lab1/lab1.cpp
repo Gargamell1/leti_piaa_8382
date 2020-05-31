@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int MiniS(int n, int z)
+int MiniS(int n, int z)//‘ункци€ дл€ получени€ минимального возможного числа разбиений из позиции z
 {
 	int sum=0, i;
 	for(i=n;i>0;i--)
@@ -15,7 +15,7 @@ int MiniS(int n, int z)
 	return sum;
 }
 
-int IsPlaceForP(int i,int j,int n,int p,int flag, int *s)
+int IsPlaceForP(int i,int j,int n,int p,int flag, int *s)//≈сть ли место дл€ размещени€ квадрата
 {
 
 	int a,b,v=0;
@@ -53,7 +53,7 @@ int IsPlaceForP(int i,int j,int n,int p,int flag, int *s)
 		return 1;	
 }
 
-int PlaceP(int i, int j, int n,int p, int *s)
+int PlaceP(int i, int j, int n,int p, int *s)//–азместить квадрат
 {
 	int a,b;
 	for(a=i;a<i+n;a++)
@@ -65,7 +65,7 @@ int PlaceP(int i, int j, int n,int p, int *s)
 	}	
 	return i*p+j;
 }
-int DelP(int h,int p, int *s)
+int DelP(int h,int p, int *s) //”далить квадрат
 {
 	int i=h/p,j=h%p, n=s[h],a,b;
 	for(a=i;a<i+n;a++)
@@ -77,7 +77,7 @@ int DelP(int h,int p, int *s)
 	}	
 	return 1;
 }
-int GetSimple(int N)
+int GetSimple(int N) //ѕолучить наименьшее простое число
 {
 	int i=2;
 	while(1)
@@ -94,7 +94,7 @@ int main()
     cin>>N;
     int p=GetSimple(N);
     int c=p,n=p/2,z[p*p],cz=-1;
-    if(p==2)
+    if(p==2) //ќбработка четных
     {
     	cout<<4<<endl;
 		cout<<1<<" "<<1<<" "<<N/2<<endl;
@@ -107,7 +107,7 @@ int main()
     int square[p/2+1][p/2+1]={0};
     int answer[p/2+1][p/2+1]={0};
  	z[0]=0;
-    for(i=0;i<p/2+1;i++)
+    for(i=0;i<p/2+1;i++)//—оздание и заполнение недоквадрата
     {
     	for(j=0;j<p/2+1;j++)
     	{
@@ -144,10 +144,10 @@ int main()
 					{
 						if(IsPlaceForP(i,j,n,p,1,&square[0][0]))
     					{
-								cz++;
-    							pz=PlaceP(i,j,n,p,&square[0][0]);
+								cz++;//количество уже поставленных
+    							pz=PlaceP(i,j,n,p,&square[0][0]);//ставим
     							place+=n*n;
-    							z[cz]=pz;
+    							z[cz]=pz;//заносим квадрат в массив
 						}
 						j++;
 					}
@@ -159,17 +159,18 @@ int main()
 			j=0;
 			n--;
 		}
-		if(cz<min)
+		if(cz<min)//¬ывод и хранение частичных решений
 		{
 			min=cz;
+			cout<<min<<endl;
 			for(i=0;i<p;i++)
     		{
     			for(j=0;j<p;j++)
     			{
     				answer[i][j]=square[i][j];
- 
+ 					cout<<answer[i][j]<<" ";
 				}
-
+				cout<<endl;
 			}	
 		}
 		for(i=0;i<p;i++)
@@ -204,7 +205,7 @@ int main()
 		if(cz==-2)
 			break;
 	}
-	p=GetSimple(N);
+	p=GetSimple(N);//ѕреобразование ответа в положенный вид из записи матрицы
  	cout<<min+4<<endl;
 	cout<<1<<" "<<1<<" "<<(p/2+1)*(N/p)<<endl;
 	cout<<(p/2+1)*(N/p)+1<<" "<<1<<" "<<(p/2)*(N/p)<<endl;
