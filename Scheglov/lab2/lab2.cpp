@@ -28,22 +28,23 @@ struct A {
     }
 };
 
-struct Node {
+struct Node {//vertex
     static Node* beg;
     static Node* end;
     char name;
     double g;
     double h;
     Node* prev;
-    vector<std::pair<Node*, double> > neig;
+    vector<std::pair<Node*, double> > neig;//edges
     
-    Node(char c) {
+    Node(char c) { // Point initialization
         name = c;
-        g = 999999; // 
+        g = 999999;
         prev = 0;
     }
     
-    double f() {
+    double f() {//heuristic function
+
         return g+h;
     }
 };
@@ -77,13 +78,13 @@ void foo() {
             double score = curr->g + curr->neig[i].second;
             Node* v = curr->neig[i].first;
             int j = 0;
-            for (;j < u.size(); j++)
+            for (;j < u.size(); j++)//Check Transition Conditions
                 if (u[j] == v)
                     break;
             if (j < u.size() && score >= v->g)
                 continue;
             
-            v->prev = curr;
+            v->prev = curr;//Making way
             v->g = score;
             j = 0;
             for (; j < q.size(); j++)
@@ -94,12 +95,13 @@ void foo() {
         }
             vector<Node*> vec;
     Node* node = curr;
-    cout<<curr->f()<<" = f() of ";
+    cout<<curr->f()<<" = f() of ";//Output intermediate result
            while(node != 0) {
         vec.push_back(node);
         node = node->prev;
     }
     for (int i = vec.size() - 1; i >= 0; i--)
+
         cout << vec[i]->name;
 	    cout<<endl;	   
     }
@@ -132,17 +134,20 @@ int main() {
 //Enter
     for (int i = 0; i < n; i++) {
         cin >> a >> c;
-        if (nodes.find(a) == nodes.end()) {
+        if (nodes.find(a) == nodes.end()) {//if there is no such peak yet
+
             nodes[a] = new Node(a);
         }   
         nodes[a]->h = c;
     } 
 
     while(cin >> a >> b >> c) {
-        if (nodes.find(a) == nodes.end()) {
+        if (nodes.find(a) == nodes.end()) {//if there is no such peak yet
+
             nodes[a] = new Node(a);
         }
-        if (nodes.find(b) == nodes.end()) {
+        if (nodes.find(b) == nodes.end()) {//if there is no such peak yet
+
             nodes[b] = new Node(b);
         }
         nodes[a]->neig.push_back(std::pair<Node*, double>(nodes[b], c));
@@ -152,10 +157,12 @@ int main() {
     foo();
     vector<Node*> vec;
     Node* node = Node::end;
-    while(node != 0) {
+    while(node != 0) {//Building the final path
+
         vec.push_back(node);
         node = node->prev;
     }
-    for (int i = vec.size() - 1; i >= 0; i--)
+    for (int i = vec.size() - 1; i >= 0; i--)//Response output
+
         cout << vec[i]->name;
 }
