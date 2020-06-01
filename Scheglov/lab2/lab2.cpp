@@ -96,11 +96,12 @@ void foo() {
             vector<Node*> vec;
     Node* node = curr;
 //Output intermediate result	    
-    cout<<curr->f()<<" = f() of ";//Output heuristic function for the current vertex
+    cout<<curr->f()<<" = f() of current vertex (last in path)";//Output heuristic function for the current vertex
            while(node != 0) {
         vec.push_back(node);
         node = node->prev;
     }
+	cout<<"Current path is : ";    
     for (int i = vec.size() - 1; i >= 0; i--)//Output current way
 
         cout << vec[i]->name;
