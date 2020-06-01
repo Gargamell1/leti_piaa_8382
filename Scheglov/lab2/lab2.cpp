@@ -95,12 +95,13 @@ void foo() {
         }
             vector<Node*> vec;
     Node* node = curr;
-    cout<<curr->f()<<" = f() of ";//Output intermediate result
+//Output intermediate result	    
+    cout<<curr->f()<<" = f() of ";//Output heuristic function for the current vertex
            while(node != 0) {
         vec.push_back(node);
         node = node->prev;
     }
-    for (int i = vec.size() - 1; i >= 0; i--)
+    for (int i = vec.size() - 1; i >= 0; i--)//Output current way
 
         cout << vec[i]->name;
 	    cout<<endl;	   
