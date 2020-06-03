@@ -39,7 +39,12 @@ int main()
 			}
 		}
 	}
-
+	cout<<"The Prefix function is: ";
+	for(int u=0;u<pp.size();u++)
+	{
+		cout<<pp[u];
+	}
+	cout<<endl;
 	i=0;
 	j=0;
 	char x=getchar();
