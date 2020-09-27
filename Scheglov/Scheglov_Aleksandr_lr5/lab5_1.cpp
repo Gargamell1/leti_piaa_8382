@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <map>
 #include <vector>
@@ -95,7 +94,7 @@ public:
     }
 
     int getNextVertex(int i, char c) { //следующий шаг автомата
-        std::cout << "Find next move for vertex with index: " << i << " by symbol: \'" << c << "\'"<< std::endl;
+        std::cout <<std::endl<< "Find next move for vertex with index: " << i << " by symbol: \'" << c << "\'"<< std::endl;
         if (vertexes[i].nextNode.find(c) == vertexes[i].nextNode.end()) {  //если нет пути в словаре путей автомата по переданному сиволу
             std::cout << "No next move by symbol: \'" << c << "\'" << std::endl;
             if (vertexes[i].nextVertexes.find(c) != vertexes[i].nextVertexes.end()) { //если есть прямая ссылка
@@ -108,8 +107,9 @@ public:
                     vertexes[i].nextNode[c] = 0;
                 }
                 else { //в противном случае добавляем в словарь след вершину из суффикасальной ссылки
-                    std::cout << "Next move by suffix link" << std::endl;
+                    std::cout << "Next move by suffix link" << std::endl <<"{" << std::endl;
                     vertexes[i].nextNode[c] = getNextVertex(getSuffixLink(i), c);
+                    std::cout << "}" << std::endl;
                 }
             }
         }
@@ -122,7 +122,7 @@ public:
         std::cout << "Start from root" << std::endl;
         for (int i = 0; i < text.length(); i++) {
             cur = getNextVertex(cur, text[i]);  //получаем путь по i - ому символу текста
-            std::cout << "Next current is vertex with index: " << cur << std::endl;
+            std::cout << "Start finding terminal vertexes by suffix links: " << std::endl<<"["<<std::endl;
             for (int j = cur; j != 0; j = getSuffixLink(j)) {  // затем проходимся от текущего символа до корня по суффиксальным
                 if (vertexes[j].isTerminal) { //если нашли терминальную
                     for (int k = 0; k < vertexes[j].numbers.size(); k++) {  //то добавляем в результат найденный паттерн, а если есть одинаковые паттерны, то добаляем в результат все
@@ -131,6 +131,7 @@ public:
                     }
                 }
             }
+            std::cout <<"]"<<std::endl << "Next current is vertex with index: " << cur << std::endl;
         }
         sort(result.begin(), result.end(), compare);   //сортировка результата
         int mostSuffixChain = 1;
@@ -142,7 +143,7 @@ public:
             int curVertex = i;
             int flag = 1;
             std::cout << "Start from index = "<<curVertex << std::endl;
-            while (vertexes[curVertex].suffixLink != 0 && vertexes[curVertex].suffixLink != -1) {  //из каждой вершины проходимся по суффиксальным и считаем длину суф цепи
+            while (vertexes[curVertex].suffixLink != 0 ) {  //из каждой вершины проходимся по суффиксальным и считаем длину суф цепи
                 curSuffixChain++;
                 curVertex = getSuffixLink(curVertex);
                 std::cout << "Now in index = " << curVertex << std::endl;

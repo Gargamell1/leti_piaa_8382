@@ -121,7 +121,7 @@ public:
     }
 
     int getNextVertex(int i, char c) { //следующий шаг автомата
-        std::cout << "Find next move for vertex with index: " << i << " by symbol: \'" << c << "\'"<< std::endl;
+        std::cout << std::endl << "Find next move for vertex with index: " << i << " by symbol: \'" << c << "\'" << std::endl;
         if (vertexes[i].nextNode.find(c) == vertexes[i].nextNode.end()) {  //если нет пути в словаре путей автомата по переданному сиволу
             std::cout << "No next move by symbol: \'" << c << "\'" << std::endl;
             if (vertexes[i].nextVertexes.find(c) != vertexes[i].nextVertexes.end()) { //если есть пр€ма€ ссылка
@@ -134,8 +134,9 @@ public:
                     vertexes[i].nextNode[c] = 0;
                 }
                 else { //в противном случае добавл€ем в словарь след вершину из суффикасальной ссылки
-                    std::cout << "Next move by suffix link" << std::endl;
+                    std::cout << "Next move by suffix link" << std::endl <<"{" << std::endl;
                     vertexes[i].nextNode[c] = getNextVertex(getSuffixLink(i), c);
+                    std::cout << "}" << std::endl;
                 }
             }
         }
@@ -156,19 +157,26 @@ public:
         }
         for (int i = 0; i < text.length(); i++) {  //проходимс€ по всем симвоалм такста
             cur = getNextVertex(cur, text[i]);  //идем по текущему символу по бору
-            std::cout << std::endl<< "Current vertex index: " << cur << std::endl;
+            std::cout << std::endl<< "CURRENT VERTEX INDEX: " << cur << std::endl;
+            std::cout << "Start finding terminal vertexes by suffix links: " << std::endl;
             for (int j = cur; j != 0; j = getSuffixLink(j)) {  // возвращаемс€ по суффиксальным в корень
+                if(j==cur)
+                    std::cout<< "[" << std::endl;
                 if (vertexes[j].isTerminal) {  //если нашли терминальную
+                    std::cout << std::endl << "]" << std::endl;
                     int indInText = i + 1 - vertexes[j].level;
                     for (int k = 0; k < vertexes[j].posInJokerPattern.size(); k++) {   //по вычисленному месту текущей подстроки и добавл€ем в вектор числа совпадений
                         if (indInText - vertexes[j].posInJokerPattern[k] >= 0) {
                             foundedForSymbols[indInText - vertexes[j].posInJokerPattern[k]] ++;
-                            std::cout << "Increase element at index: " << indInText - vertexes[j].posInJokerPattern[k] << " in array of number of matches, it's value: " << foundedForSymbols[indInText - vertexes[j].posInJokerPattern[k]] << std::endl;
+                            std::cout<<std::endl << "Increase element at index: " << indInText - vertexes[j].posInJokerPattern[k] << " in array of number of matches, it's value: " << foundedForSymbols[indInText - vertexes[j].posInJokerPattern[k]] << std::endl;
                         }
                     }
                 }
             }
+            std::cout<< std::endl;
+            
         }
+        std::cout << std::endl << "Result :"<<std::endl;
         for (int i = 0; i < foundedForSymbols.size() - jokerPatternSize + 1; i++) {  //вывод результата
             if (foundedForSymbols[i] == numOfFoundedStr) {
                 std::cout << i + 1 << std::endl;
